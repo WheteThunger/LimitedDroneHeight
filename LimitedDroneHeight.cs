@@ -113,6 +113,9 @@ namespace Oxide.Plugins
 
         private class HeightLimiter : EntityComponent<Drone>
         {
+            private const float DistanceFromMaxHeightToSlow = 5;
+            private const float DistanceToleranceAboveMaxHeight = 5;
+
             public static void StartControl(Drone drone, int maxHeight) =>
                 drone.GetOrAddComponent<HeightLimiter>().OnControlStarted(maxHeight);
 
@@ -167,10 +170,22 @@ namespace Oxide.Plugins
                 var heightDiff = currentHeight - _maxHeight;
                 var currentThrottle = baseEntity.currentInput.throttle;
 
-                if (heightDiff >= 0 && currentThrottle >= 0)
-                    baseEntity.currentInput.throttle = -2f * heightDiff / baseEntity.altitudeAcceleration;
-                else if (heightDiff < 0 && heightDiff >= -5 && currentThrottle > 0)
-                    baseEntity.currentInput.throttle = -2f * heightDiff / baseEntity.altitudeAcceleration;
+                if (heightDiff > DistanceToleranceAboveMaxHeight && currentThrottle >= 0)
+                {
+                    // Drone is above max height, and the player is not attempting to move down, so set throttle to negative to make the drone move down.
+                    baseEntity.currentInput.throttle = -heightDiff / baseEntity.altitudeAcceleration;
+                }
+                else if (heightDiff >= 0 && currentThrottle > 0)
+                {
+                    // Drone is within allowed distance above max height, and the player is attempting to move up, so set throttle to zero.
+                    baseEntity.currentInput.throttle = 0;
+                }
+                else if (heightDiff < 0 && heightDiff >= -DistanceFromMaxHeightToSlow && currentThrottle > 0)
+                {
+                    // Close to max height, and the player is attempting to move up, so reduce throttle relative to the distance.
+                    // For example: If 4 meters away, use 0.8 throttle. If 2 meters away, use 0.4 throttle.
+                    baseEntity.currentInput.throttle = 1 / DistanceFromMaxHeightToSlow * heightDiff / baseEntity.altitudeAcceleration;
+                }
             }
         }
 
