@@ -46,6 +46,8 @@ Default configuration:
   - `PermissionSuffix` -- Determines the generated permission of format `limiteddroneheight.<suffix>`.
   - `MaxHeight` -- Determines the max height for drones deployed by players with this profile.
 
+Note: Having a building below the drone does **not** allow it to fly higher. Height is only dictated by terrain and water. For this reason, if you want drones to be able to take off from and land on tall buildings, you should set the height limits to approximately 75m, or higher if your server has reduced stability requirements.
+
 ## Developer Hooks
 
 #### OnDroneHeightLimit
