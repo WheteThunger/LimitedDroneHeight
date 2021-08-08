@@ -7,8 +7,8 @@
 The following permissions come with the plugin's **default configuration**. Granting one to a player determines how high their drones can be flown above terrain or water, overriding the default. Granting multiple profiles to a player will cause only the last one to apply, based on the order in the config.
 
 - `limiteddroneheight.low` -- 25m
-- `limiteddroneheight.medium` -- 50m
-- `limiteddroneheight.high` -- 100m
+- `limiteddroneheight.medium` -- 75m
+- `limiteddroneheight.high` -- 125m
 - `limiteddroneheight.unlimited` -- No limit
 
 You can add more profiles in the plugin configuration (`ProfilesRequiringPermission`), and the plugin will automatically generate permissions of the format `limiteddroneheight.<suffix>` when reloaded.
@@ -19,7 +19,7 @@ Default configuration:
 
 ```json
 {
-  "DefaultMaxHeight": 50,
+  "DefaultMaxHeight": 75,
   "ProfilesRequiringPermission": [
     {
       "PermissionSuffix": "low",
@@ -27,11 +27,11 @@ Default configuration:
     },
     {
       "PermissionSuffix": "medium",
-      "MaxHeight": 50
+      "MaxHeight": 75
     },
     {
       "PermissionSuffix": "high",
-      "MaxHeight": 100
+      "MaxHeight": 125
     },
     {
       "PermissionSuffix": "unlimited",

@@ -215,7 +215,7 @@ namespace Oxide.Plugins
         private class Configuration : SerializableConfiguration
         {
             [JsonProperty("DefaultMaxHeight")]
-            public int DefaultMaxHeight = 50;
+            public int DefaultMaxHeight = 75;
 
             [JsonProperty("ProfilesRequiringPermission")]
             public HeightProfile[] ProfilesRequiringPermission = new HeightProfile[]
@@ -228,12 +228,12 @@ namespace Oxide.Plugins
                 new HeightProfile()
                 {
                     PermissionSuffix = "medium",
-                    MaxHeight = 50,
+                    MaxHeight = 75,
                 },
                 new HeightProfile()
                 {
                     PermissionSuffix = "high",
-                    MaxHeight = 100,
+                    MaxHeight = 125,
                 },
                 new HeightProfile()
                 {
